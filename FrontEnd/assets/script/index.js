@@ -3,29 +3,30 @@ fetch("http://localhost:5678/api/works")
   .then((reponse) => reponse.json())
   .then((projets) => {
     console.log("Projets: ", projets)
-    afficheGallery(projets);
-    afficheCategories();
+    afficheGallery(projets)
+    afficheCategories()
   });
 
 /*afficher la galerie*/
 
 function afficheGallery(projets) {
-  const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = "";
+  const gallery = document.querySelector(".gallery")
+  gallery.innerHTML = ""
   projets.forEach((projet) => {
-    const figure = document.createElement("figure");
-    const img = document.createElement("img");
-    const figcaption = document.createElement("figcaption");
+    const figure = document.createElement("figure")
+    const img = document.createElement("img")
+    const figcaption = document.createElement("figcaption")
 
 
     /*afficher toutes les images*/
-    img.src = projet.imageUrl;
-    img.alt = projet.title;
-    figcaption.textContent = projet.title;
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    gallery.appendChild(figure);
-  });
+
+    img.src = projet.imageUrl
+    img.alt = projet.title
+    figcaption.textContent = projet.title
+    figure.appendChild(img)
+    figure.appendChild(figcaption)
+    gallery.appendChild(figure)
+  })
 }
 
 /*récupérer les filtres*/
@@ -34,9 +35,14 @@ const getCategories = () => {
   const categories = fetch("http://localhost:5678/api/categories")
     .then((reponse) => reponse.json())
   return categories
-};
+}
 
-/* création des filtres + affiche bouttons */
+/* création des filtres + afficher bouttons */
+
+  // Créer le bouton "Tous"
+
+
+/*bouttons des filtres*/
 
 const afficheCategories = async () => {
   const filters = document.querySelector(".filters")
@@ -52,15 +58,54 @@ const afficheCategories = async () => {
 
 /*filtrer au click par categorie la gallerie*/
 
-const filtreCategorie = async () => {
-  const projets = await categories()
-  console.log(categories)
+/*const filtreGallery = async () => {
+  const filtrer = await gallery ()
+  
   const bouttons = document.querySelectorAll(".filters button")
     buttons.forEach((button) => {
     button.addEventListener("click", (e)=>{
-      console.log(e.target.id)
+      buttonname = e.target.name
+      gallery.innerHTML=""
+      if (buttonname !== "") {
+        const triCategories = filtrer.filter((image)={
+          return image.categorieId == buttonId
+        })
+      }
+      console.log(buttonId)
     })
   })
 }
 
-filtreCategorie()
+filtreGallery()*/
+
+
+
+/**********à faire **********/
+  // On crée un bouton "Tous"
+  // On lui met le texte "Tous"
+  // On l'insère dans filters
+
+  /* Gestion du clic sur le bouton "Tous"
+
+  // On met un addEventListener sur le clic de ce bouton "Tous"
+  // On appelle la fonction getWorks()
+  // Dans le .then , on appelle la fonction afficheWorksHome en passant en paramètre les works obtenus
+  // (Voir lignes 45 à 48)
+
+  /* On crée les boutons pour chaque catégorie dans la base de données */
+
+  // On appelle getCategories()
+  // Dans le .then, on boucle sur chaque catégorie
+  // Pour chaque catégorie trouvée, on crée un bouton
+  // On lui met comme texte le nom de la catégorie
+  // On l'insère dans filters
+
+  // On met un addEventListener sur le clic de ce bouton
+  // On appelle la fonction getWorksFiltered en passant en paramètre le nom de la catégorie
+  // Dans le .then , on appelle la fonction afficheWorksHome en passant en paramètre les works obtenus
+
+/* On appelle l'affichage des filtres par catégorie */
+
+// On appelle getCategories
+// Dans le .then , on appelle la fonction afficheCategories en passant en paramètre les categories obtenues
+// (Voir ligne 45 à 48 pour exemple)
