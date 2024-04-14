@@ -58,25 +58,7 @@ const afficheCategories = async () => {
 
 /*filtrer au click par categorie la gallerie*/
 
-/*const filtreGallery = async () => {
-  const filtrer = await gallery ()
-  
-  const bouttons = document.querySelectorAll(".filters button")
-    buttons.forEach((button) => {
-    button.addEventListener("click", (e)=>{
-      buttonname = e.target.name
-      gallery.innerHTML=""
-      if (buttonname !== "") {
-        const triCategories = filtrer.filter((image)={
-          return image.categorieId == buttonId
-        })
-      }
-      console.log(buttonId)
-    })
-  })
-}
 
-filtreGallery()*/
 
 
 
