@@ -4,9 +4,9 @@ const loginUrl = "http://localhost:5678/api/users/login"
 const inputEmail = document.getElementById("email")
 const inputPassword = document.getElementById("password")
 const submitBtn = document.querySelector("input[type='submit']")
-const form = document.getElementById("loginForm")
-const loginError = document.querySelector(".loginError")
-const passwordError = document.querySelector(".passwordError")
+const form = document.querySelector(".login")
+const loginError = document.querySelector(".errorLogin")
+const passwordError = document.querySelector(".errorPassword")
 
 const logUser = {
   email: "",
@@ -18,15 +18,15 @@ const logUser = {
 
 // Evenement à la connection
 form.addEventListener("submit", (e) => {
-  e.preventDefault()
-  e.stopPropagation()
+  e.preventDefault() //interrompt le comportement par default d'un evenement
+  e.stopPropagation()//arrete la propagation d'un evenement par rapport aux éléments parents dans le DOM
   loginUser()
 })
 
 // Evenement au MAIL
 inputEmail.addEventListener("input", (e) => {
-  inputEmail.reportValidity()
-  logUser.email = e.target.value
+  inputEmail.reportValidity() //valide un champs de formulaire html par js
+  logUser.email = e.target.value //ne pas raffrachir la page
 })
 
 // Evenement au Password
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 })
 
 // faire la route users/login (methode post)
-
+/*récuperer les informations users/login*/
 async function loginUser() {
   try {
     await fetch(loginUrl, {
@@ -59,26 +59,27 @@ async function loginUser() {
         data = responseData
         console.log(data)
       })
+      /*en cas d'erreur login*/
     if (data.message) {
       loginError.textContent = "Erreur dans l’identifiant !!"
       inputEmail.style.color = "red"
       console.log(logUser)
+      /*en cas d'erreur mot de passe*/
     } else if (data.error) {
       passwordError.textContent = "Erreur dans le mot de passe !!"
       loginError.textContent = ""
       inputEmail.style.color = "#1d6154"
-
       console.log(logUser)
     } else {
       inputPassword.style.color = "#1d6154"
       passwordError.textContent = ""
       loginError.textContent = ""
-      console.log("LogAdmin OK")
+      console.log("LogAdmin correct")
       console.log(logUser)
       // stockage du token dans le stockage local
       localStorage.setItem("token", data.token)
       //Redirection index.html
-      window.location.href = "../index.html"
+      window.location.href = ".assets/login.html"
     }
   } catch (error) {
     console.log(error)
