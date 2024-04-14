@@ -3,8 +3,7 @@
 const loginUrl = "http://localhost:5678/api/users/login"
 const inputEmail = document.getElementById("email")
 const inputPassword = document.getElementById("password")
-const submitBtn = document.querySelector("input[type='submit']")
-const form = document.querySelector(".login")
+const form = document.getElementById("submit")
 const loginError = document.querySelector(".errorLogin")
 const passwordError = document.querySelector(".errorPassword")
 
@@ -61,12 +60,12 @@ async function loginUser() {
       })
       /*en cas d'erreur login*/
     if (data.message) {
-      loginError.textContent = "Erreur dans l’identifiant !!"
+      loginError.textContent = "Identifiant incorrect"
       inputEmail.style.color = "red"
       console.log(logUser)
       /*en cas d'erreur mot de passe*/
     } else if (data.error) {
-      passwordError.textContent = "Erreur dans le mot de passe !!"
+      passwordError.textContent = "Mot de passe incorrect"
       loginError.textContent = ""
       inputEmail.style.color = "#1d6154"
       console.log(logUser)
@@ -79,7 +78,7 @@ async function loginUser() {
       // stockage du token dans le stockage local
       localStorage.setItem("token", data.token)
       //Redirection index.html
-      window.location.href = ".assets/login.html"
+      window.location.href = ".assets/index.html"
     }
   } catch (error) {
     console.log(error)
