@@ -40,7 +40,13 @@ const getCategories = () => {
 /* création des filtres + afficher bouttons */
 
   // Créer le bouton "Tous"
-
+const tous = () => {
+  var btn = document.createElement("BUTTON")         // Créer un élément <button>
+  var t = document.createTextNode("CLICK ME")        // Créer un noeud textuel
+  btn.appendChild(tous)                               
+  document.body.appendChild(btn)          
+  console.log()         
+}
 
 /*bouttons des filtres*/
 
