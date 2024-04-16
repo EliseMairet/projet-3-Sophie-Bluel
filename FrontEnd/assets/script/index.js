@@ -62,6 +62,7 @@ const afficheCategories = async () => {
   })
 }
 
+
 /*filtrer au click par categorie la gallerie*/
 
 
