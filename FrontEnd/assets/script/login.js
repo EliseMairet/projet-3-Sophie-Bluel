@@ -1,11 +1,10 @@
 
 // varaible login
-const loginUrl = "http://localhost:5678/api/users/login"
-const inputEmail = document.getElementById("email")
-const inputPassword = document.getElementById("password")
-const form = document.getElementById("submit")
-const loginError = document.querySelector(".errorLogin")
-const passwordError = document.querySelector(".errorPassword")
+const email = document.querySelector("form #email")
+const password = document.querySelector("form #password")
+const form = document.querySelector("form")
+const messageErreur = document.querySelector(".login p")
+
 
 const logUser = {
   email: "",
@@ -13,74 +12,48 @@ const logUser = {
 }
 
 
-//LOGIQUE contrôle du Log IN
-
-// Evenement à la connection
-form.addEventListener("submit", (e) => {
-  e.preventDefault() //interrompt le comportement par default d'un evenement
-  e.stopPropagation()//arrete la propagation d'un evenement par rapport aux éléments parents dans le DOM
-  loginUser()
-})
-
-// Evenement au MAIL
-inputEmail.addEventListener("input", (e) => {
-  inputEmail.reportValidity() //valide un champs de formulaire html par js
-  logUser.email = e.target.value //ne pas raffrachir la page
-})
-
-// Evenement au Password
-inputPassword.addEventListener("input", (e) => {
-  inputPassword.reportValidity()
-  logUser.password = e.target.value
-})
-
-//Evenement au chargement du DOM
-document.addEventListener("DOMContentLoaded", (e) => {
-  e.preventDefault()
-  logUser.email = inputEmail.value
-  logUser.password = inputPassword.value
-  console.log(logUser)
-})
+//Création du Login
 
 // faire la route users/login (methode post)
 /*récuperer les informations users/login*/
 async function loginUser() {
-  try {
-    await fetch(loginUrl, {
+    await fetch("http://localhost:5678/api/users/login"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(logUser)
-    })
+      body: JSON.stringify(loginUser)
+    }
       .then((response) => response.json())
       .then((responseData) => {
         data = responseData
         console.log(data)
       })
-      /*en cas d'erreur login*/
-    if (data.message) {
-      loginError.textContent = "Identifiant incorrect"
-      inputEmail.style.color = "red"
-      console.log(logUser)
-      /*en cas d'erreur mot de passe*/
-    } else if (data.error) {
-      passwordError.textContent = "Mot de passe incorrect"
-      loginError.textContent = ""
-      inputEmail.style.color = "#1d6154"
-      console.log(logUser)
-    } else {
-      inputPassword.style.color = "#1d6154"
-      passwordError.textContent = ""
-      loginError.textContent = ""
-      console.log("LogAdmin correct")
-      console.log(logUser)
-      // stockage du token dans le stockage local
-      localStorage.setItem("token", data.token)
-      //Redirection index.html
-      window.location.href = ".assets/index.html"
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
+    } 
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const userEmail = email.value
+      const userPwd = password.value
+      console.log(userEmail, userPwd)
+      users.forEach((user) => {
+        // verifications
+        if (
+          user.email == userEmail && //email bon 
+          user.password == userPwd && //password bon
+          user.admin == true
+        ) {
+          // si les conditions sont remplies on fait ça
+          window.sessionStorage.loged = true //stockage token
+          window.location.href = "../index.html" //retour page d'accueil si connection ok
+          console.log("je suis conecté")
+        } else {
+          //message d'erreur
+          email.classList.add("inputErrorLogin")
+          password.classList.add("inputErrorLogin")
+          messageErreur.textContent =
+            "Votre email ou votre mot de passe est incorrect"
+        }
+      })
+    })
+
+  console.log()

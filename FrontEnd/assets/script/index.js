@@ -4,11 +4,10 @@ fetch("http://localhost:5678/api/works")
   .then((projets) => {
     console.log("Projets: ", projets)
     afficheGallery(projets)
-    afficheCategories()
+    afficheCategories(works)
   });
 
-/*afficher la galerie*/
-
+//afficher la galerie
 function afficheGallery(projets) {
   const gallery = document.querySelector(".gallery")
   gallery.innerHTML = ""
@@ -17,9 +16,7 @@ function afficheGallery(projets) {
     const img = document.createElement("img")
     const figcaption = document.createElement("figcaption")
 
-
-    /*afficher toutes les images*/
-
+    //afficher toutes les images
     img.src = projet.imageUrl
     img.alt = projet.title
     figcaption.textContent = projet.title
@@ -29,7 +26,7 @@ function afficheGallery(projets) {
   })
 }
 
-/*récupérer les filtres*/
+//récupérer les filtres
 
 const getCategories = () => {
   const categories = fetch("http://localhost:5678/api/categories")
@@ -37,64 +34,84 @@ const getCategories = () => {
   return categories
 }
 
-/* création des filtres + afficher bouttons */
+  // Fonction pour récupérer les projets 
+  const getWorks = () => {
+    return fetch("http://localhost:5678/api/works")
+    .then(response => response.json())
+    .then(works => {
+      return works
+    });
+  }
 
-  // Créer le bouton "Tous"
-const tous = () => {
-  var btn = document.createElement("BUTTON")         // Créer un élément <button>
-  var t = document.createTextNode("CLICK ME")        // Créer un noeud textuel
-  btn.appendChild(tous)                               
-  document.body.appendChild(btn)          
-  console.log()         
-}
+// création des filtres + afficher bouttons 
 
-/*bouttons des filtres*/
-
-const afficheCategories = async () => {
-  const filters = document.querySelector(".filters")
-  const categories = await getCategories()
-  console.log("Get categories response: ", categories)
-  categories.forEach((categorie) => {
-    const bouttonCategories = document.createElement("button")
-    bouttonCategories.innerText = categorie.name
-    bouttonCategories.id = categorie.id
-    filters.appendChild(bouttonCategories)
+// Fonction pour afficher les catégories dans des filtres 
+const afficheCategories = (categories) => {
+  const filters=document.querySelector(".filters")
+  // Création du bouton tous 
+  const button=document.createElement("button")
+  button.innerText="Tous"
+  filters.appendChild(button)
+  // Gestion du clic sur le bouton "Tous"
+  button.addEventListener("click", function(){
+  getWorks()
+  .then(works => {
+  afficheWorksHome(works)
   })
-}
+})
+
+  // On crée les boutons pour chaque catégorie dans la base de données 
+  categories.forEach(categorie => {
+    const button=document.createElement("button")
+    button.innerText=categorie.name
+    filters.appendChild(button)
+    button.addEventListener("click", function(){
+      getWorksFiltered(categorie.name)
+      .then(works => {
+      afficheWorks(works)
+    })
+  })
+  })
+ }
+ console.log()
+
+// On appelle l'affichage des filtres par catégorie 
+getCategories()
+  .then(categories => {
+    afficheCategories(categories)
+    const categorie = document.querySelectorAll(".filters button")
+    console.log(categorie)
+    categorie.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        btnID = e.target.id // evenement au click par rapport au nom
+        afficheGallery.innerHTML = "" //suppression tableau pour tri
+        if (btnId !== "0"){ //si différent de id "0"
+          const galleryTri = categorie.filter((elements)=> {
+            return elements.categoryId == btnId
+          })
+          galleryTri.forEach((elements) => {
+            createProjets (elements)
+          })
+        } else {
+          getWorks()
+        }
+        console.log(btnId)
+      })
+    })
+  })
+
+  console.log(getCategories)
 
 
-/*filtrer au click par categorie la gallerie*/
+  /**************partie connection**************/
+  const loged = window.sessionStorage.loged
+  const admin = document.querySelector ("header nav .admin")
+  const logout = document.querySelector ("header nav .logout")
 
-
-
-
-
-/**********à faire **********/
-  // On crée un bouton "Tous"
-  // On lui met le texte "Tous"
-  // On l'insère dans filters
-
-  /* Gestion du clic sur le bouton "Tous"
-
-  // On met un addEventListener sur le clic de ce bouton "Tous"
-  // On appelle la fonction getWorks()
-  // Dans le .then , on appelle la fonction afficheWorksHome en passant en paramètre les works obtenus
-  // (Voir lignes 45 à 48)
-
-  /* On crée les boutons pour chaque catégorie dans la base de données */
-
-  // On appelle getCategories()
-  // Dans le .then, on boucle sur chaque catégorie
-  // Pour chaque catégorie trouvée, on crée un bouton
-  // On lui met comme texte le nom de la catégorie
-  // On l'insère dans filters
-
-  // On met un addEventListener sur le clic de ce bouton
-  // On appelle la fonction getWorksFiltered en passant en paramètre le nom de la catégorie
-  // Dans le .then , on appelle la fonction afficheWorksHome en passant en paramètre les works obtenus
-
-/* On appelle l'affichage des filtres par catégorie */
-
-// On appelle getCategories
-// Dans le .then , on appelle la fonction afficheCategories en passant en paramètre les categories obtenues
-// (Voir ligne 45 à 48 pour exemple)
+  if (loged == "true"){
+    admin.textContent = "Admin"
+    logout.textContent = "logout"
+    logout.addEventListener("click", ()=>{
+      window.sessionStorage.loged = false // pour la deconnection
+    })
+  }
