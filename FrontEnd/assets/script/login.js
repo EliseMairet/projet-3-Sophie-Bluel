@@ -16,22 +16,22 @@ const logUser = {
 
 // faire la route users/login (methode post)
 /*récuperer les informations users/login*/
-async function loginUser() {
-    await fetch("http://localhost:5678/api/users/login"), {
+function loginUser() {
+   fetch("http://localhost:5678/api/users/login"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(loginUser)
+      body: JSON.stringify(logUser)
     }
       .then((response) => response.json())
       .then((responseData) => {
         data = responseData
         console.log(data)
       })
-    } 
+     
     form.addEventListener("submit", (e) => {
-      e.preventDefault();
+      e.preventDefault() //empêcher la page de se rafraichir à la connection
       const userEmail = email.value
       const userPwd = password.value
       console.log(userEmail, userPwd)
@@ -54,6 +54,7 @@ async function loginUser() {
             "Votre email ou votre mot de passe est incorrect"
         }
       })
-    })
+    }) 
+  }
 
   console.log()
