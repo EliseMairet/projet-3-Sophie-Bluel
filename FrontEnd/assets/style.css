@@ -247,28 +247,44 @@ footer nav ul {
 /*************Modale************/
 
 .containerModale {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position:fixed;
     width:100%;
     height:100%;
-    background-color: #0000004D;
+    background-color: #0000004D 30%;
 }
 
 .galleryModale {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-    width: 50%;
-    height: 50%;
-    border-radius: 10px;
-    justify-content: space-around;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: white;
+	width: 50%;
+	height: 50%;
+	border-radius: 10px;
+	justify-content: space-around;
 }
 
+.fa-xmark {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	cursor: pointer;
+}
 
-
-span {
+h3 {
     font-family:'Work sans';
+	font-weight: 400;
+	font-size: 26px;
+	text-align: center;
 }
+
+.button {
+	Width: 237px;
+	Height: 36px;
+	border-radius: 60px;
+	background-color: #1D6154;
+}
+
