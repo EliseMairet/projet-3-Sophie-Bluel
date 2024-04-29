@@ -1,6 +1,7 @@
 //affichage de la modale à la connection
 //variable
-const admin = document.querySelector (".admin")
+
+//const admin = document.querySelector (".admin")
 const containerModale = document.querySelector(".containerModale")
 const xmark = document.querySelector(".containerModals .fa-xmark")
 const photoModal = document.querySelector(".photoModal")
@@ -73,4 +74,6 @@ async function displayphotoModal () {
     })
   }
   deletephotos()
+
+
 

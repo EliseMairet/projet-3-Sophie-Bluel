@@ -1,22 +1,16 @@
 
 // varaible login
-const email = document.querySelector(".form #email")
-const password = document.querySelector(".form #password")
-const form = document.querySelector("#form")
+const email = document.querySelector("#email")
+const password = document.querySelector("#password")
+const form = document.querySelector("#formulaire")
 const messageErreur = document.querySelector(".login p")
-
-
-const logUser = {
-  email: "",
-  password: ""
-}
 
 
 //Création du Login
 
 // faire la route users/login (methode post)
 /*récuperer les informations users/login*/
-function loginUser() {
+/*function loginUser() {
   fetch("http://localhost:5678/api/users/login", {
       method: "POST",
       headers: {
@@ -29,14 +23,18 @@ function loginUser() {
       data = responseData;
       console.log(data);
   });
-}
-     
-    form.addEventListener("submit", (e) => {
+}*/
+     console.log(form)
+    form.addEventListener("submit", e => {
       e.preventDefault() //empêcher la page de se rafraichir à la connection
       const userEmail = email.value
       const userPwd = password.value
-      console.log(userEmail, userPwd)
-      loginUser()
+    if (userEmail == "" || userPwd == "") {
+      alert ("Merci de remplir tout les champs")
+    }
+    else {
+     loginUser() 
+    }
      })
     
 // Traitement de la réponse de la fonction loginUser()
