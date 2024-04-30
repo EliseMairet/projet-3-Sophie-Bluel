@@ -26,18 +26,40 @@ containerModale.addEventListener("click", (e)=>{
     }
 })
 
+
+
+
+
+
+//bouton modifier 
+const modifier=document.createElement("button")
+  button.innerText="Modifier"
+  addEventListenerd("fa-solid fa-pen-to-square")
+  portfolio.appendChild(button)
+// lier le bouton modifier à la modale
+  button.addEventListener("click", function(){
+    photoModal()
+    .then(works => {
+    photoModal(works)
+    })
+  })
+
+
+
+
+
 //affichage de la gallery dans la modale + affichage corbeille
 
 async function displayphotoModal () {
     photoModal.innerHTML = ""
-    const photos = await works() //récupération gallery 
+    const photos = await getWorks() //récupération gallery 
     photos.forEach(photos => { //création de la gallery dans la modale
         const figure = document.createElement("figure")
         const img = document.createElement("img")
         const span = document.createElement("span")
         const trash = document.createElement("i")
         trash.classList.add("fa-solid", "fa-trash-can") //injection corbeille
-        trash.id = photos.id //récupération de l'id dans la corbeille
+        trash.id = photos.id //récupération de l'id dans la corbeille  (faire un addeventlistener) 
         img.src = photos.imageUrl // récupération url dans la corbeille
         span.appendChild(trash)
         figure.appendChild(span)
@@ -46,7 +68,7 @@ async function displayphotoModal () {
     })
   }
 
-  displayphotoModalphotoModal()
+  displayphotoModal()
 
   //supprimer une image dans la modale
   function deletephotos () {
@@ -58,7 +80,7 @@ async function displayphotoModal () {
             method: "delete",
             Headers:{"content-Type": "application/json"},
            }
-           fetch("http://localhost:5678/api/works/" + id, init)
+           fetch("http://localhost:5678/api/works/" + id)
            .then ((response)=>{
              if (!response.ok) {
                 console.log ("la suppression n'a pas marché")
@@ -73,7 +95,17 @@ async function displayphotoModal () {
         })
     })
   }
+
   deletephotos()
+
+//bouton ajouter photo
+const ajouter=document.createElement("button")
+button.innerText="Ajouter une photo"
+photoModal.appendChild(button)
+// lier le bouton "ajouter aphot" à la modale2
+button.addEventListener("click", function(){
+  ajoutPhoto()
+  })
 
 
 
