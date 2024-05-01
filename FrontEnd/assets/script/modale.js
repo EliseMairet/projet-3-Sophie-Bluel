@@ -1,7 +1,7 @@
 //affichage de la modale à la connection
 //variable
 
-//const admin = document.querySelector (".admin")
+const admin = document.querySelector (".nav .admin")
 const containerModale = document.querySelector(".containerModale")
 const xmark = document.querySelector(".containerModals .fa-xmark")
 const photoModal = document.querySelector(".photoModal")
@@ -28,21 +28,21 @@ containerModale.addEventListener("click", (e)=>{
 
 
 
-
-
-
+const buttonModifier = () => {
+const modifier=document.querySelector(".portfolio")
 //bouton modifier 
-const modifier=document.createElement("button")
+const Modifier=document.createElement("button")
   button.innerText="Modifier"
   addEventListenerd("fa-solid fa-pen-to-square")
-  portfolio.appendChild(button)
+  portfolio.appendChild(modifier)
 // lier le bouton modifier à la modale
   button.addEventListener("click", function(){
     photoModal()
     .then(works => {
     photoModal(works)
     })
-  })
+  }) 
+  }
 
 
 
@@ -102,7 +102,7 @@ async function displayphotoModal () {
 const ajouter=document.createElement("button")
 button.innerText="Ajouter une photo"
 photoModal.appendChild(button)
-// lier le bouton "ajouter aphot" à la modale2
+// lier le bouton "ajouter photo" à la modale2
 button.addEventListener("click", function(){
   ajoutPhoto()
   })
