@@ -91,15 +91,20 @@ const afficheCategories = (categories) => {
 }
 
   /**************partie connection**************/
-  const loged = window.sessionStorage.loged
-  const admin = document.querySelector ("header nav .admin")
-  const logout = document.querySelector ("header nav .logout")
+  document.addEventListener("DOMContentLoaded", function() {
 
-
-  if (loged == "true"){
-    admin.textContent = "Admin"
-    logout.textContent = "logout"
-    logout.addEventListener("click", ()=>{
-      window.sessionStorage.loged = false // pour la deconnection
-    })
+  const logged = window.sessionStorage.loged
+  const login = document.querySelector(".login")
+  const logout = document.querySelector(".logout")
+  
+  if (logged === "true") {
+      login.style.display = "none" // Masquer le bouton login s'il y a une session active
+  
+      logout.addEventListener("click", () => {
+          window.sessionStorage.loged = false // Déconnexion
+          location.reload(); // Recharger la page pour appliquer les changements
+      })
+  } else {
+      logout.style.display = "none" // Masquer le bouton logout s'il n'y a pas de session active
   }
+})

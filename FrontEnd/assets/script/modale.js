@@ -1,111 +1,93 @@
-//affichage de la modale à la connection
-//variable
+document.addEventListener("DOMContentLoaded", function() {
 
-const admin = document.querySelector (".nav .admin")
-const containerModale = document.querySelector(".containerModale")
-const xmark = document.querySelector(".containerModals .fa-xmark")
-const photoModal = document.querySelector(".photoModal")
+  const login = document.querySelector(".login")
+  const logout = document.querySelector(".logout")
+  const containerModale = document.querySelector(".containerModale")
+  const xmark = document.querySelector(".fa-xmark") // Correction du sélecteur
+  const photoModal = document.getElementById("modale1") // Correction de getElementById
 
-//au click admin apparition modale
-admin.addEventListener("click", ()=>{
-    console.log(admin)
-    containerModale.style.display ="flex"
-})
-
-//au click de la croix fermeture modale
-xmark.addEventListener("click", ()=>{
-    console.log(xmark)
-    containerModale.style.display ="none"
-})
-
-//enlever modale au click à côté
-containerModale.addEventListener("click", (e)=>{
-    console.log(e.target)
-    if (e.target.className == "containerModale") {
-        containerModale.style.display = "none"
-    }
-})
-
-
-
-const buttonModifier = () => {
-const modifier=document.querySelector(".portfolio")
-//bouton modifier 
-const Modifier=document.createElement("button")
-  button.innerText="Modifier"
-  addEventListenerd("fa-solid fa-pen-to-square")
-  portfolio.appendChild(modifier)
-// lier le bouton modifier à la modale
-  button.addEventListener("click", function(){
-    photoModal()
-    .then(works => {
-    photoModal(works)
-    })
-  }) 
-  }
-
-
-
-
-
-//affichage de la gallery dans la modale + affichage corbeille
-
-async function displayphotoModal () {
-    photoModal.innerHTML = ""
-    const photos = await getWorks() //récupération gallery 
-    photos.forEach(photos => { //création de la gallery dans la modale
-        const figure = document.createElement("figure")
-        const img = document.createElement("img")
-        const span = document.createElement("span")
-        const trash = document.createElement("i")
-        trash.classList.add("fa-solid", "fa-trash-can") //injection corbeille
-        trash.id = photos.id //récupération de l'id dans la corbeille  (faire un addeventlistener) 
-        img.src = photos.imageUrl // récupération url dans la corbeille
-        span.appendChild(trash)
-        figure.appendChild(span)
-        figure.appendChild(img)
-        photos.appendChild(figure)
-    })
-  }
-
-  displayphotoModal()
-
-  //supprimer une image dans la modale
-  function deletephotos () {
-    const trashAll = document.querySelectorAll (".fa-trash-can")
-    trashAll.forEach(trash => {
-        trash.addEventListener("click", (e)=>{
-           const id = trash.id
-           const init = {
-            method: "delete",
-            Headers:{"content-Type": "application/json"},
-           }
-           fetch("http://localhost:5678/api/works/" + id)
-           .then ((response)=>{
-             if (!response.ok) {
-                console.log ("la suppression n'a pas marché")
-             }
-             return response.json()
-           })
-           .then((data0)=>{
-            console.log("la suppression a reussi voici la data:",data)
-            displayphotoModal()
-            afficheGallery()
-           })
-        })
-    })
-  }
-
-  deletephotos()
-
-//bouton ajouter photo
-const ajouter=document.createElement("button")
-button.innerText="Ajouter une photo"
-photoModal.appendChild(button)
-// lier le bouton "ajouter photo" à la modale2
-button.addEventListener("click", function(){
-  ajoutPhoto()
+  // Affichage de la modale à la connexion
+  login.addEventListener("click", () => {
+      containerModale.style.display = "flex"
   })
 
+  // Fermeture de la modale au clic sur la croix
+  xmark.addEventListener("click", () => {
+      containerModale.style.display = "none"
+  })
 
+  // Enlever la modale au clic à côté
+  containerModale.addEventListener("click", (e) => {
+      if (e.target.className === "containerModale") {
+          containerModale.style.display = "none"
+      }
+  })
 
+  // Appel à la fonction pour afficher le bouton "Modifier"
+  async function Modifier() {
+      const portfolio = document.querySelector("#portfolio") // Sélection de l'élément portfolio
+      const Modifier = document.createElement("button")
+      Modifier.innerText = "Modifier"
+      Modifier.classList.add("fa-solid", "fa-pen-to-square")
+      portfolio.appendChild(Modifier)
+
+      // Lier le bouton "Modifier" à la modale
+      Modifier.addEventListener("click", async () => {
+          await displayphotoModal()
+          deletephotos()
+          containerModale.style.display = "flex" // Afficher la modale
+      })
+  }
+
+  // Affichage de la gallery dans la modale + affichage corbeille
+  async function displayphotoModal() {
+      photoModal.innerHTML = ""
+      // Correction : Remplacer `getWorks()` par la fonction appropriée pour récupérer les photos
+      const photos = await getWorks() // Récupération de la galerie
+      photos.forEach((photo) => {
+          const figure = document.createElement("figure")
+          const img = document.createElement("img")
+          const span = document.createElement("span")
+          const trash = document.createElement("i")
+          trash.classList.add("fa-solid", "fa-trash-can")
+          trash.id = photo.id
+          img.src = photo.imageUrl
+          span.appendChild(trash)
+          figure.appendChild(span)
+          figure.appendChild(img)
+          photoModal.appendChild(figure)
+      })
+  }
+
+  // Supprimer une image dans la modale
+  async function deletephotos() {
+      const trashAll = document.querySelectorAll(".fa-trash-can");
+      trashAll.forEach((trash) => {
+          trash.addEventListener("click", async (e) => {
+              const id = trash.id;
+              const response = await fetch("http://localhost:5678/api/works/" + id, {
+                  method: "DELETE",
+                  headers: {
+                      "Content-Type": "application/json"
+                  }
+              });
+              if (!response.ok) {
+                  console.log("La suppression n'a pas réussi.")
+                  return
+              }
+              console.log("La suppression a réussi.")
+              await displayphotoModal()
+          })
+      })
+  }
+
+  // Bouton ajouter photo
+  const ajouter = document.createElement("button")
+  ajouter.innerText = "Ajouter une photo"
+  photoModal.appendChild(ajouter)
+
+  // Lier le bouton "Ajouter une photo" à la modale
+  ajouter.addEventListener("click", () => {
+      containerModale.style.display = "flex"
+  })
+})
