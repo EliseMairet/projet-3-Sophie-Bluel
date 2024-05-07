@@ -61,10 +61,7 @@
 	<section id="portfolio">
 		<div class="portfolioModifier"></div>
 		<h2>Mes Projets</h2>
-		<div class = "buttonModifier">
-			<i class="fa-regular fa-pen-to-square"></i>
-			<a href="containerModale" id="Modifier">modifier</a>
-		</div>
+		<div class="buttonModifier" id="Modifier"></div>
 
 
 
@@ -104,35 +101,32 @@
 	</nav>
 </footer>
 
-
+<section id="logged">
 <div class="containerModale">
-	<div class="galleryModale" id="modale1"></id>
-	<span id="xmark"><i class="fa-solid fa-xmark"></i></span>
-	<h3>Galerie photo</h3>
-	<div class="photoModal"></div>
+    <div class="galleryModale" id="modale1">
+    <span id="xmark"><i class="fa-solid fa-xmark"></i></span>
+    <h3>Galerie photo</h3>
+    <button id="ajouterButton">Ajouter une photo</button>
 	</div>
-
 
 	<div class="ajoutPhoto" id="modale2">
-	<h3>Ajout photo</h3>
-	<form class="picture" id="picture">
-		<div class="addPicture">
-		<i class="fa-regular fa-image fa-4x"></i>
-		<label for="file" class="buttonadd"> + Ajouter photo</label>
-		<input type="file" id="file" name="file" accept="image/png, image/jpeg" class="add" multiple/>
-		<p class="commentaire">jpg, png :4mo max</p>
-		</div>
+    <h3>Ajout photo</h3>
+    <form class="picture" id="picture">
+        <div class="addPicture">
+            <i class="fa-regular fa-image fa-4x"></i>
+            <label for="file" class="buttonadd"> + Ajouter photo</label>
+            <input type="file" id="file" name="file" accept="image/png, image/jpeg" class="add" multiple/>
+            <p class="commentaire">jpg, png :4mo max</p>
+        </div>
 
-	<label for="titre">Titre</label>
-	<input type="texte" name="titre" id="titre" class="titreModale"/>
+        <label for="titre">Titre</label>
+        <input type="texte" name="titre" id="titre" class="titreModale"/>
 
-	<label for="categorie">Catégorie</label>
-	<input type="texte" name="categorie"id="categorie" class="categorieModale"/>
-	/*faire boutton valider en js*/
-	</form>
-
+        <label for="categorie">Catégorie</label>
+        <input type="texte" name="categorie" id="categorie" class="categorieModale"/>
+    </form>
 	</div>
-</div>
+</section>
 
 </body>
 </html>

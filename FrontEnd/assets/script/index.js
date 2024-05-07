@@ -93,18 +93,26 @@ const afficheCategories = (categories) => {
   /**************partie connection**************/
   document.addEventListener("DOMContentLoaded", function() {
 
-  const logged = window.sessionStorage.loged
+  const loged = window.sessionStorage.loged
   const login = document.querySelector(".login")
   const logout = document.querySelector(".logout")
+  const logged = document.getElementById("logged")
   
-  if (logged === "true") {
+  if (loged === "true") {
       login.style.display = "none" // Masquer le bouton login s'il y a une session active
-  
+
+      logged.style.display = "block" // affichage de la modale lors de la connection
+      console.log(logged)
+
+      filters.style.display = "none" //masquer les boutons des filtres s'il y a une session active
+
       logout.addEventListener("click", () => {
           window.sessionStorage.loged = false // Déconnexion
-          location.reload(); // Recharger la page pour appliquer les changements
+          location.reload() // Recharger la page pour appliquer les changements
+
       })
   } else {
       logout.style.display = "none" // Masquer le bouton logout s'il n'y a pas de session active
   }
 })
+

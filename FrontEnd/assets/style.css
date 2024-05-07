@@ -253,7 +253,7 @@ footer nav ul {
 /*************Modale************/
 
 .containerModale {
-    /*display: none;*/
+    display: none;
     justify-content: center;
     align-items: center;
     position:fixed;

@@ -3,8 +3,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const login = document.querySelector(".login")
   const logout = document.querySelector(".logout")
   const containerModale = document.querySelector(".containerModale")
-  const xmark = document.querySelector(".fa-xmark") // Correction du sélecteur
-  const photoModal = document.getElementById("modale1") // Correction de getElementById
+  const xmark = document.querySelector(".fa-xmark") 
+  const photoModal = document.getElementById("modale1") 
+  const ajouterPhoto = document.getElementById("modale2") 
 
   // Affichage de la modale à la connexion
   login.addEventListener("click", () => {
@@ -23,26 +24,33 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   })
 
-  // Appel à la fonction pour afficher le bouton "Modifier"
   async function Modifier() {
-      const portfolio = document.querySelector("#portfolio") // Sélection de l'élément portfolio
-      const Modifier = document.createElement("button")
-      Modifier.innerText = "Modifier"
-      Modifier.classList.add("fa-solid", "fa-pen-to-square")
-      portfolio.appendChild(Modifier)
+    const modifierContainer = document.querySelector("#Modifier") // Sélection de l'élément où le bouton Modifier sera ajouté
+    // Création dynamique du bouton Modifier
+    const modifierButton = document.createElement("button")
+    modifierButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> Modifier'
+    // Ajout de l'écouteur d'événements pour afficher la modale au clic sur le bouton Modifier
+    modifierButton.addEventListener("click", async () => {
+        await displayphotoModal()
+        deletephotos()
+        containerModale.style.display = "flex" // Afficher la modale
+    })
+    // Ajout du bouton Modifier à l'élément Modifier
+    modifierContainer.appendChild(modifierButton)
+}
 
-      // Lier le bouton "Modifier" à la modale
-      Modifier.addEventListener("click", async () => {
-          await displayphotoModal()
-          deletephotos()
-          containerModale.style.display = "flex" // Afficher la modale
-      })
-  }
+Modifier()
+
+// Attachez l'événement de clic au bouton "Modifier"
+document.getElementById("Modifier").addEventListener("click", async () => {
+    await displayphotoModal()
+    deletephotos()
+    document.querySelector(".containerModale").style.display = "flex" // Afficher la modale
+})
 
   // Affichage de la gallery dans la modale + affichage corbeille
   async function displayphotoModal() {
       photoModal.innerHTML = ""
-      // Correction : Remplacer `getWorks()` par la fonction appropriée pour récupérer les photos
       const photos = await getWorks() // Récupération de la galerie
       photos.forEach((photo) => {
           const figure = document.createElement("figure")
@@ -91,3 +99,22 @@ document.addEventListener("DOMContentLoaded", function() {
       containerModale.style.display = "flex"
   })
 })
+
+
+async function Ajouter() {
+    const modifierContainer = document.querySelector("#modale1") // Sélection de l'élément où le bouton Modifier sera ajouté
+    // Création dynamique du bouton Modifier
+    const AjouterButton = document.createElement("button")
+    AjouterButton.innerText = "Ajouter une photo"
+    // Ajout de l'écouteur d'événements pour afficher la modale au clic sur le bouton Modifier
+    AjouterButton.addEventListener("click", async () => {
+        await modale2()
+        containerModale.style.display = "flex" // Afficher la modale
+    })
+    // Ajout du bouton Modifier à l'élément Modifier
+    modifierContainer.appendChild(AjouterButton)
+}
+
+Ajouter()
+
+//prévisualisation de l'image
