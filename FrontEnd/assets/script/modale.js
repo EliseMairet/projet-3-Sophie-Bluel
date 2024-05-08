@@ -1,11 +1,10 @@
-document.addEventListener("DOMContentLoaded", function() {
-
   const login = document.querySelector(".login")
   const logout = document.querySelector(".logout")
   const containerModale = document.querySelector(".containerModale")
   const xmark = document.querySelector(".fa-xmark") 
   const photoModal = document.getElementById("modale1") 
   const ajouterPhoto = document.getElementById("modale2") 
+  const modifierButton = document.querySelector("#Modifier")
 
   // Affichage de la modale à la connexion
   login.addEventListener("click", () => {
@@ -24,22 +23,12 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   })
 
-  async function Modifier() {
-    const modifierContainer = document.querySelector("#Modifier") // Sélection de l'élément où le bouton Modifier sera ajouté
-    // Création dynamique du bouton Modifier
-    const modifierButton = document.createElement("button")
-    modifierButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> Modifier'
     // Ajout de l'écouteur d'événements pour afficher la modale au clic sur le bouton Modifier
-    modifierButton.addEventListener("click", async () => {
-        await displayphotoModal()
+    modifierButton.addEventListener("click", () => {
+        displayphotoModal()
         deletephotos()
         containerModale.style.display = "flex" // Afficher la modale
     })
-    // Ajout du bouton Modifier à l'élément Modifier
-    modifierContainer.appendChild(modifierButton)
-}
-
-Modifier()
 
 // Attachez l'événement de clic au bouton "Modifier"
 document.getElementById("Modifier").addEventListener("click", async () => {
@@ -58,7 +47,9 @@ document.getElementById("Modifier").addEventListener("click", async () => {
           const span = document.createElement("span")
           const trash = document.createElement("i")
           trash.classList.add("fa-solid", "fa-trash-can")
-          trash.id = photo.id
+          trash.addEventListener("click", () => {
+            deletephotos(photo.id)
+          })
           img.src = photo.imageUrl
           span.appendChild(trash)
           figure.appendChild(span)
@@ -67,27 +58,41 @@ document.getElementById("Modifier").addEventListener("click", async () => {
       })
   }
 
+  displayphotoModal()
+
+  function getAuthorization() {
+    if (localStorage.getItem('token')) {
+        const token = localStorage.getItem('token')
+        return 'Bearer' + logged
+        } else {
+        return false
+ }
+}
+
+getAuthorization()
+
   // Supprimer une image dans la modale
-  async function deletephotos() {
-      const trashAll = document.querySelectorAll(".fa-trash-can");
-      trashAll.forEach((trash) => {
-          trash.addEventListener("click", async (e) => {
-              const id = trash.id;
-              const response = await fetch("http://localhost:5678/api/works/" + id, {
+  function deletephotos(id) {
+              const response = fetch("http://localhost:5678/api/works/" + id, {
                   method: "DELETE",
                   headers: {
-                      "Content-Type": "application/json"
-                  }
-              });
+                    'Accept': 'application/json',
+                    'Authorization': getAuthorization(), //token
+                    'Content-Type': 'application/json',
+                  },
+                params: {
+                    'id': id
+                    } 
+              })
               if (!response.ok) {
                   console.log("La suppression n'a pas réussi.")
                   return
               }
               console.log("La suppression a réussi.")
-              await displayphotoModal()
-          })
-      })
-  }
+              displayphotoModal()
+          }
+
+deletephotos()
 
   // Bouton ajouter photo
   const ajouter = document.createElement("button")
@@ -98,8 +103,6 @@ document.getElementById("Modifier").addEventListener("click", async () => {
   ajouter.addEventListener("click", () => {
       containerModale.style.display = "flex"
   })
-})
-
 
 async function Ajouter() {
     const modifierContainer = document.querySelector("#modale1") // Sélection de l'élément où le bouton Modifier sera ajouté
@@ -112,9 +115,11 @@ async function Ajouter() {
         containerModale.style.display = "flex" // Afficher la modale
     })
     // Ajout du bouton Modifier à l'élément Modifier
-    modifierContainer.appendChild(AjouterButton)
+
+    // modifierContainer.appendChild(AjouterButton)
 }
 
 Ajouter()
 
-//prévisualisation de l'image
+
+  //prévisualisation de l'image

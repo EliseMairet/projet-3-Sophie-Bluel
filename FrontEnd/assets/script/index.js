@@ -91,28 +91,40 @@ const afficheCategories = (categories) => {
 }
 
   /**************partie connection**************/
+  function logOut() {
+    localStorage.removeItem("token") //fonction pour vider localstorage
+    location.reload() //rechage la page
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
 
-  const loged = window.sessionStorage.loged
+  const loged = localStorage.getItem("token")
   const login = document.querySelector(".login")
   const logout = document.querySelector(".logout")
   const logged = document.getElementById("logged")
+  const filters = document.querySelector(".filters")
   
-  if (loged === "true") {
+  if(typeof loged === "string") {
       login.style.display = "none" // Masquer le bouton login s'il y a une session active
 
       logged.style.display = "block" // affichage de la modale lors de la connection
-      console.log(logged)
 
       filters.style.display = "none" //masquer les boutons des filtres s'il y a une session active
 
-      logout.addEventListener("click", () => {
-          window.sessionStorage.loged = false // Déconnexion
-          location.reload() // Recharger la page pour appliquer les changements
+    const modifierContainer = document.querySelector("#Modifier") // Sélection de l'élément où le bouton Modifier sera ajouté
+    // Création dynamique du bouton Modifier
+    const modifierButton = document.createElement("button")
+    modifierButton.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> Modifier'
+    // Ajout du bouton Modifier à l'élément Modifier
+    modifierButton.classList.add("modifierButton")
+    modifierContainer.appendChild(modifierButton)
 
+      logout.addEventListener("click", () => {
+        console.log("deco ok")
+          logOut() // Déconnexion
+          
       })
   } else {
       logout.style.display = "none" // Masquer le bouton logout s'il n'y a pas de session active
   }
 })
-
