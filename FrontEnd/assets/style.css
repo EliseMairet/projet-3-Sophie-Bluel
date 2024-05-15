@@ -252,6 +252,8 @@ footer nav ul {
 
 /*************Modale************/
 
+/*modale1*/
+
 .containerModale {
     display: none;
     justify-content: center;
@@ -293,4 +295,6 @@ h3 {
 	border-radius: 60px;
 	background-color: #1D6154;
 }
+
+
 

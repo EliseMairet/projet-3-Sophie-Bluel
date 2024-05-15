@@ -101,12 +101,14 @@
 <section id="logged">
 <div class="containerModale">
     <div class="galleryModale" id="modale1">
-    <span id="xmark"><i class="fa-solid fa-xmark"></i></span>
+    <span id=""><i class="fa-solid fa-xmark"></i></span>
     <h3>Galerie photo</h3>
     <button id="ajouterButton">Ajouter une photo</button>
 	</div>
 
 	<div class="ajoutPhoto" id="modale2">
+		<span id="xmarkAdd"><i class="fa-solid fa-xmark"></i></span>
+		<span id="arrowLeft"><i class= "fa-solid fa-arrow-left"></i></span>
     <h3>Ajout photo</h3>
     <form class="picture" id="picture">
         <div class="addPicture">
@@ -119,10 +121,10 @@
         <label for="titre">Titre</label>
         <input type="texte" name="titre" id="titre" class="titreModale"/>
 
-        <label for="categorie">Catégorie</label>
-        <input type="texte" name="categorie" id="categorie" class="categorieModale"/>
+        <label for="modaleCategorie">Catégorie</label>
+        <select name="modaleCategorie" id="modaleCategorie" class="categorieModale"></select>
     </form>
-	</div>
+</div>
 </section>
 
 </body>
