@@ -213,8 +213,8 @@ addDisplay()
         .then(data => {
           console.log("La photo a bien été ajoutée", data)
           getWorks()
-        });
-      });
+        })
+      })
     } else {
     }
   
@@ -228,10 +228,10 @@ addDisplay()
             validerButon.classList.add("valid")
           } else {
             validerButon.classList.remove("valid")
-            validerButon.disabled = true;
+            validerButon.disabled = true
           }
         })
-        modale2.appendChild(validerButon); // Ajout du bouton au DOM
+        modale2.appendChild(validerButon) // Ajout du bouton au DOM
       } else {
       }
     }
