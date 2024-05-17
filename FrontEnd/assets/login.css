@@ -100,10 +100,10 @@ h2{
 	margin-bottom: 20px;
 }
 
-form {
+#formulaire {
 	display: flex;
 	flex-direction: column;
-	text-align: center;
+	justify-content: center;
 }
 
 section label {
@@ -138,15 +138,21 @@ input[type="submit"]{
     cursor: pointer;
 }
 
-section a {
-    font-family: 'Work Sans';
+a.mot-de-passe-oublie {
+    font-family: 'Work Sans', sans-serif;
     font-weight: 500;
     font-size: 14px;
     color: black;
+    text-decoration: none;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: right;
+}
+
+footer ul li {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
 }

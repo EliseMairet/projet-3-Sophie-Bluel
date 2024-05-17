@@ -4,7 +4,7 @@
   const xmark = document.querySelector(".fa-xmark") 
   const photoModal = document.getElementById("modale1") 
   const ajouterPhoto = document.getElementById("modale2") 
-  const modifierButton = document.querySelector("#Modifier")
+  const modifierButton = document.getElementById("Modifier")
 
   // Affichage de la modale à la connexion
   login.addEventListener("click", () => {
@@ -32,6 +32,7 @@
 
   // Affichage de la gallery dans la modale + affichage corbeille
   async function displayphotoModal() {
+    const deleteGallery = document.querySelector(".deleteGallery")
       photoModal.innerHTML = ""
       const photos = await getWorks() // Récupération de la galerie
       photos.forEach((photo) => {
@@ -93,11 +94,10 @@ function deletephotos(id) {
     })
     .then(response => {
         if (!response.ok) {
-            console.log("La suppression n'a pas réussi.")
             return
         }
-        console.log("La suppression a réussi.")
-        displayphotoModal();
+        displayphotoModal()
+        getProjet()
     })
     .catch(error => {
         console.error("Une erreur s'est produite lors de la suppression :", error)
@@ -116,6 +116,17 @@ deletephotos()
       containerModale.style.display = "flex"
   })
 
+
+
+
+
+
+
+
+
+
+
+  
   //deuxième modale
 
   const ajouterButton = document.querySelector("#ajouterButton")
@@ -200,6 +211,23 @@ addDisplay()
     }
   
     displayCategorieModale()
+
+    //previsu de l'image
+function afficheImageModale() {
+  const reader = new FileReader()
+  const image = new Image() 
+  const fileName = uploadInput.files[0].name
+  const previewImage = document.querySelector(".previewImage")
+  reader.onload = event => {
+      image.src = event.target.result
+      image.alt = fileName.split('.')[0]  
+  }
+  reader.readAsDataURL(uploadInput.files[0])
+  console.log(previewImage)
+  previewImage.appendChild(image)
+}
+
+afficheImageModale()
   
     if (form) {
       form.addEventListener("submit", async (e) => {
@@ -237,3 +265,11 @@ addDisplay()
     }
   
     verifChamps()
+
+
+
+  //message securité pour la suppression 
+  //faire appel de token pour validation avec tout les champs remplis
+  //faire la previsu de l'image
+  //rendre bouton valider dispo que quand tout les champs sont remplis
+  

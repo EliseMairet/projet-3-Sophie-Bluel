@@ -1,10 +1,12 @@
 /*faire le lien avec api*/
+function getProjet() { 
 fetch("http://localhost:5678/api/works")
   .then((reponse) => reponse.json())
   .then((projets) => {
     console.log("Projets: ", projets)
     afficheGallery(projets)
-  });
+  })
+ }
 
 //afficher la galerie
 function afficheGallery(projets) {
