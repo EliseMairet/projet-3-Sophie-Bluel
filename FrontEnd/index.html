@@ -37,7 +37,7 @@
 			<li><a href= "" class="logout">logout</a></li>
 
 
-			<li><a href ="#"><img src="./assets/icons/instagram.png" alt="Instagram"></a></li>
+			<li><a href ="#"><img src="./assets/icons/instagram.png" alt="Instagram" class="logoInst"></a></li>
 		</ul>
 	</nav>
 </header>
@@ -56,10 +56,10 @@
 
 
 	<section id="portfolio">
-		<div class="portfolioModifier"></div>
+	<div class="portfolioModifier">
 		<h2>Mes Projets</h2>
 		<div class="buttonModifier" id="Modifier"></div>
-
+	</div>
 
 
 
@@ -101,16 +101,20 @@
 <section id="logged">
 <div class="containerModale">
     <div class="galleryModale" id="modale1">
+		<h3>Galerie photo</h3>
+		<div class="deleteGallery"></div>
     <span id=""><i class="fa-solid fa-xmark"></i></span>
-    <h3>Galerie photo</h3>
-    <button id="ajouterButton">Ajouter une photo</button>
 	</div>
+
 
 	<div class="ajoutPhoto" id="modale2">
 		<span id="xmarkAdd"><i class="fa-solid fa-xmark"></i></span>
 		<span id="arrowLeft"><i class= "fa-solid fa-arrow-left"></i></span>
     <h3>Ajout photo</h3>
     <form class="picture" id="picture">
+
+		<div id= "previewImage"></div>
+
         <div class="addPicture">
             <i class="fa-regular fa-image fa-4x"></i>
             <label for="file" class="buttonadd"> + Ajouter photo</label>
