@@ -68,7 +68,7 @@ deletePhotoHandler(id)
 
 // Fonction pour afficher un message de confirmation avant la suppression
 function confirmDeletePhoto(id) {
-  const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette image ? Cette action est irréversible.")
+  const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette image ?")
   if (confirmation) {
       deletePhotoHandler(id)
   }
