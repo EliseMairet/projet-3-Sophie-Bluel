@@ -27,7 +27,7 @@
     modifierButton.addEventListener("click", () => {
         displayphotoModal()
         deletephotos()
-        containerModale.style.display = "flex" // Afficher la modale
+        photoModal.style.display = "flex" // Afficher la modale
     })
 
   // Affichage de la gallery dans la modale + affichage corbeille
@@ -63,7 +63,19 @@ async function deletePhotoHandler(id) {
     }
 }
 
-deletePhotoHandler()
+deletePhotoHandler(id)
+
+
+// Fonction pour afficher un message de confirmation avant la suppression
+function confirmDeletePhoto(id) {
+  const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette image ? Cette action est irréversible.")
+  if (confirmation) {
+      deletePhotoHandler(id)
+  }
+}
+
+confirmDeletePhoto()
+
 
 function getAuthorization() {
     const token = localStorage.getItem('token')
@@ -211,23 +223,6 @@ addDisplay()
     }
   
     displayCategorieModale()
-
-    //previsu de l'image
-function afficheImageModale() {
-  const reader = new FileReader()
-  const image = new Image() 
-  const fileName = uploadInput.files[0].name
-  const previewImage = document.querySelector(".previewImage")
-  reader.onload = event => {
-      image.src = event.target.result
-      image.alt = fileName.split('.')[0]  
-  }
-  reader.readAsDataURL(uploadInput.files[0])
-  console.log(previewImage)
-  previewImage.appendChild(image)
-}
-
-afficheImageModale()
   
     if (form) {
       form.addEventListener("submit", async (e) => {
@@ -243,9 +238,14 @@ afficheImageModale()
           getWorks()
         })
       })
-    } else {
     }
-  
+
+
+
+
+
+
+
     function verifChamps() {
       const modale2 = document.getElementById("modale2")
       const validerButon = document.createElement("button")
@@ -259,8 +259,8 @@ afficheImageModale()
             validerButon.disabled = true
           }
         })
-        modale2.appendChild(validerButon) // Ajout du bouton au DOM
-      } else {
+        modale2.appendChild(validerButon) 
+      } else { console.log("bouton valider ok")
       }
     }
   
@@ -268,8 +268,59 @@ afficheImageModale()
 
 
 
-  //message securité pour la suppression 
-  //faire appel de token pour validation avec tout les champs remplis
-  //faire la previsu de l'image
+
+// Prévisualisation de l'image
+function afficheImageModale(event) {
+  const fileInput = event.target
+  const reader = new FileReader()
+  const image = new Image()
+  const file = fileInput.files[0]
+  const fileName = file.name
+  const previewImage = document.getElementById("previewImage")
+
+  reader.onload = (event) => {
+    image.src = event.target.result
+    image.alt = fileName.split('.')[0]
+    console.log(previewImage)
+    previewImage.appendChild(image)
+  }
+
+  reader.readAsDataURL(file)
+}
+
+
+
+
+function addphoto(id) {
+  const token = localStorage.getItem('token')
+  if (!token) {
+      console.error("Token d'authentification manquant.")
+      return;
+  }
+
+  fetch("http://localhost:5678/api/works/" + id, {
+      method: "POST",
+      headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token, // Ajouter le token d'authentification dans l'en-tête
+          'Content-Type': 'application/json',
+      },
+  })
+  .then(response => {
+      if (!response.ok) {
+          return
+      }
+      displayCategorieModale()
+      getProjet()
+  })
+  .catch(error => {
+      console.error("Une erreur s'est produite lors de l'ajout de la photo:", error)
+  })
+}
+
+addphoto()
+
+
+
   //rendre bouton valider dispo que quand tout les champs sont remplis
   

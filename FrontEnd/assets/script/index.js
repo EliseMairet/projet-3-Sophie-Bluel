@@ -8,6 +8,8 @@ fetch("http://localhost:5678/api/works")
   })
  }
 
+ getProjet()
+
 //afficher la galerie
 function afficheGallery(projets) {
   const gallery = document.querySelector(".gallery")
@@ -46,7 +48,7 @@ getCategories()
     .then(response => response.json())
     .then(works => {
       return works
-    });
+    })
   }
 
 /*Fonction pour récupérer les projets filtrés, en passant le nom de la catégorie en paramètre */

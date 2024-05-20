@@ -103,6 +103,7 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 16px;
+	cursor: pointer;
 }
 
 li:hover {
@@ -258,10 +259,6 @@ footer nav ul {
 
 /***********mode Edition**********/
 
-#logged {
-	display: none;
-}
-
 .edition {
 	display: flex;
 	justify-content: center;
@@ -313,29 +310,36 @@ footer nav ul {
 
 .galleryModale {
 	display: flex;
-	text-align: left;
-	flex-wrap: wrap;
-	background-color: white;
-	width: 50%;
+    align-items: center;
+    background-color: white;
+    width: 50%;
 	height: 50%;
-	border-radius: 10px;
-	justify-content: space-around;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
 }
+
+.galleryModale h3 {
+    font-family: 'Work sans', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    text-align: center;
+    width: 100%;
+    margin: 0 0 20px;
+}
+
 
 .galleryModale img {
-	display: flex;
-	text-align: left;
-	flex-wrap: wrap;
-	width: 77px;
-	height: 102px;
+    width: 77px;
+    height: 102px;
+    margin-bottom: 10px;
 }
 
-.fa-xmark {
+.fa-solid .fa-xmark {
 	position: absolute;
-	top: 20px;
-	right: 20px;
-	cursor: pointer;
-	align-items: center;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
 }
 
 h3 {
@@ -349,13 +353,21 @@ h3 {
 }
 
 .button {
-	Width: 237px;
-	Height: 36px;
-	border-radius: 60px;
-	background-color: #1D6154;
+    width: 237px;
+    height: 36px;
+    border-radius: 60px;
+    background-color: #1D6154;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
 /*modale 2*/
+#modale2 {
+	display: none;
+}
+
 .ajoutPhoto{
 	display: flex;
 	text-align: left;
@@ -366,3 +378,4 @@ h3 {
 	border-radius: 10px;
 	justify-content: space-around;
 }
+
