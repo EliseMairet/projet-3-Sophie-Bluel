@@ -5,11 +5,8 @@
   const photoModal = document.getElementById("modale1") 
   const ajouterPhoto = document.getElementById("modale2") 
   const modifierButton = document.getElementById("Modifier")
-
-  // Affichage de la modale à la connexion
-  login.addEventListener("click", () => {
-      containerModale.style.display = "flex"
-  })
+  const deleteGallery = document.querySelector(".deleteGallery")
+  const boutonAjoutPhoto = document.querySelector(".btnAjoutPhoto")
 
   // Fermeture de la modale au clic sur la croix
   xmark.addEventListener("click", () => {
@@ -25,15 +22,14 @@
 
     // Ajout de l'écouteur d'événements pour afficher la modale au clic sur le bouton Modifier
     modifierButton.addEventListener("click", () => {
-        displayphotoModal()
-        deletephotos()
-        photoModal.style.display = "flex" // Afficher la modale
+      containerModale.style.display = "flex"
+      photoModal.style.display = "flex" // Afficher la modale
+      displayphotoModal()
     })
 
   // Affichage de la gallery dans la modale + affichage corbeille
   async function displayphotoModal() {
-    const deleteGallery = document.querySelector(".deleteGallery")
-      photoModal.innerHTML = ""
+      deleteGallery.innerHTML = ""
       const photos = await getWorks() // Récupération de la galerie
       photos.forEach((photo) => {
           const figure = document.createElement("figure")
@@ -48,11 +44,9 @@
           span.appendChild(trash)
           figure.appendChild(span)
           figure.appendChild(img)
-          photoModal.appendChild(figure)
+          deleteGallery.appendChild(figure)
       })
   }
-
-  displayphotoModal()
 
   // Appeler deletephotos avec l'ID approprié lorsque nécessaire
 async function deletePhotoHandler(id) {
@@ -63,8 +57,6 @@ async function deletePhotoHandler(id) {
     }
 }
 
-deletePhotoHandler(id)
-
 
 // Fonction pour afficher un message de confirmation avant la suppression
 function confirmDeletePhoto(id) {
@@ -73,8 +65,6 @@ function confirmDeletePhoto(id) {
       deletePhotoHandler(id)
   }
 }
-
-confirmDeletePhoto()
 
 
 function getAuthorization() {
@@ -86,59 +76,55 @@ function getAuthorization() {
     }
 }
 
-getAuthorization()
-
   // Supprimer une image dans la modale
 function deletephotos(id) {
-    const token = localStorage.getItem('token')
-    if (!token) {
-        console.error("Token d'authentification manquant.")
-        return;
-    }
-
-    fetch("http://localhost:5678/api/works/" + id, {
+    let text = "Voulez-vous supprimer ce projet ?"
+    if(confirm(text) == true)
+    {
+      fetch("http://localhost:5678/api/works/" + id, {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',
-            'Authorization': 'Bearer ' + token, // Ajouter le token d'authentification dans l'en-tête
+            'Authorization': getAuthorization(), // Ajouter le token d'authentification dans l'en-tête
             'Content-Type': 'application/json',
         },
-    })
-    .then(response => {
-        if (!response.ok) {
-            return
+        params: {
+          'id' : id
         }
-        displayphotoModal()
-        getProjet()
-    })
-    .catch(error => {
-        console.error("Une erreur s'est produite lors de la suppression :", error)
-    })
+      })
+      .then(response => {
+          if (!response.ok) {
+              return
+          }
+          displayphotoModal()
+          getProjet()
+      })
+      .catch(error => {
+          console.error("Une erreur s'est produite lors de la suppression :", error)
+      })
+    } 
 }
 
-deletephotos()
-
-  // Bouton ajouter photo
-  const ajouter = document.createElement("button")
-  ajouter.innerText = "Ajouter une photo"
-  photoModal.appendChild(ajouter)
-
   // Lier le bouton "Ajouter une photo" à la modale
-  ajouter.addEventListener("click", () => {
-      containerModale.style.display = "flex"
+  boutonAjoutPhoto.addEventListener("click", () => {
+    photoModal.style.display = "none"
+    ajouterPhoto.style.display = "flex"
   })
 
 
 
-
-
-
-
-
-
-
-
   
+
+
+
+
+
+
+
+
+
+
+
   //deuxième modale
 
   const ajouterButton = document.querySelector("#ajouterButton")
@@ -146,25 +132,6 @@ deletephotos()
   const arrowLeft = document.getElementById("arrowLeft")
   const xmarkAdd = document.getElementById("xmarkAdd")
 
-//lier bouton "ajouter photo" à la modale 2
-// bouton ajouter 
-async function Ajouter() {
-    const modifierContainer = document.querySelector("#modale1") // Sélection de l'élément où le bouton Modifier sera ajouté
-    // Création dynamique du bouton Modifier
-    const AjouterButton = document.createElement("button")
-    AjouterButton.innerText = "Ajouter une photo"
-    // Ajout de l'écouteur d'événements pour afficher la modale au clic sur le bouton Modifier
-    AjouterButton.addEventListener("click", async () => {
-        await modale2()
-        containerModale.style.display = "flex" // Afficher la modale
-    })
-    // Ajout du bouton Modifier à l'élément Modifier
-    modifierContainer.appendChild(AjouterButton)
-}
-
-Ajouter()
-
-function addDisplay() {
     arrowLeft.addEventListener("click", ()=>{
         ajoutPhoto.style.display = "flex"
         photoModal.style.display = "none"
@@ -172,10 +139,8 @@ function addDisplay() {
     xmarkAdd.addEventListener("click", ()=>{
         ajoutPhoto.style.display = "none"
         photoModal.style.display = "none"
+        containerModale.style.display = "none"
     })
-}
-
-addDisplay()
 
     const addPicture = document.querySelector(".addPicture")
     const inputFile = document.querySelector(".addPicture input")
@@ -183,30 +148,15 @@ addDisplay()
     const iconFile = document.querySelector(".fa-image.fa-4x") // Correction du sélecteur pour l'icône
     const pFile = document.querySelector(".addPicture p")
   
-    if (inputFile) {
-      inputFile.addEventListener("change", () => {
-        const file = inputFile.files[0] // Correction de l'accès au fichier
-        console.log(file)
-        if (file) {
-          const reader = new FileReader()
-          reader.onload = function (e) {
-            addPicture.src = e.target.result
-            addPicture.style.display = "flex"
-            labelFile.style.display = "none"
-            iconFile.style.display = "none"
-            pFile.style.display = "none"
-          }
-          reader.readAsDataURL(file)
-        }
-      })
-    } else {
-      console.error("Input file element not found")
-    }
+    inputFile.addEventListener("change", (event) => {
+      afficheImageModale(event)
+    }) 
+
   
     const form = document.querySelector(".addPicture form")
     const titre = document.getElementById("titre")
-    const modaleCategorie = document.querySelector(".picture .modaleCategorie") // Correction du sélecteur
   
+
     async function displayCategorieModale() {
       const select = document.querySelector(".ajoutPhoto select")
       if (select) {
@@ -214,7 +164,7 @@ addDisplay()
         categories.forEach(modaleCategorie => { // Correction de la boucle
           const option = document.createElement("option")
           option.value = modaleCategorie.id
-          option.textContent = modaleCategorie.className
+          option.textContent = modaleCategorie.name
           select.appendChild(option)
         })
       } else {
@@ -240,12 +190,6 @@ addDisplay()
       })
     }
 
-
-
-
-
-
-
     function verifChamps() {
       const modale2 = document.getElementById("modale2")
       const validerButon = document.createElement("button")
@@ -266,11 +210,9 @@ addDisplay()
   
     verifChamps()
 
-
-
-
 // Prévisualisation de l'image
 function afficheImageModale(event) {
+  console.log("ici")
   const fileInput = event.target
   const reader = new FileReader()
   const image = new Image()
@@ -283,13 +225,11 @@ function afficheImageModale(event) {
     image.alt = fileName.split('.')[0]
     console.log(previewImage)
     previewImage.appendChild(image)
+    addPicture.style.display = "none"
   }
 
   reader.readAsDataURL(file)
 }
-
-
-
 
 function addphoto(id) {
   const token = localStorage.getItem('token')
@@ -318,9 +258,9 @@ function addphoto(id) {
   })
 }
 
-addphoto()
+
+
 
 
 
   //rendre bouton valider dispo que quand tout les champs sont remplis
-  

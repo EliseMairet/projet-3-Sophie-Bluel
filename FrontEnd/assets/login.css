@@ -26,12 +26,6 @@ time, mark, audio, video {
     text-decoration: none;
 }
 
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-
 body {
 	line-height: 1;
 }
@@ -79,6 +73,11 @@ li:hover {
     color: black;
 }
 
+.logoInst{
+	height: 22px;
+	width: 22px;
+}
+
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
@@ -100,9 +99,8 @@ h2{
 	margin-bottom: 20px;
 }
 
-#formulaire {
+#formulaire input {
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 }
 
@@ -148,14 +146,12 @@ a.mot-de-passe-oublie {
     text-decoration: none;
 }
 
-footer nav ul {
+footer .li{
 	display: flex;
-	justify-content: flex-end;
-	margin: right;
+    justify-content: right;
 }
 
-footer ul li {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 14px;
-	cursor: pointer;
-}
+
+
+
+
