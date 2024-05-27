@@ -1,71 +1,52 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-	color: inherit;
-    text-decoration: none;
-}
-
+/* Style général */
 body {
-	line-height: 1;
+    font-family: 'Work Sans', sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-ol, ul {
-	list-style: none;
+.main-container {
+    flex: 1;
 }
 
-/** end reset css**/
-body {
-	margin: 50px;
-	font-family: 'Work Sans' ;
-	font-size: 14px;
-}
-
+/* Style de l'en-tête */
 header {
-	display: flex;
-	justify-content: space-between;
-	margin: 50px 0
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
 }
 
-h1{
-	display: flex;
-	flex-direction: column;
-	font-family: 'Syne';
+header h1 {
+    font-family: 'Syne';
+    margin: 0;
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
+}
+
+header h1 span {
+    display: block;
+    font-weight: 400;
+	font-size: 10px;
+    color: #B1663C;
 }
 
 nav ul {
-	display: flex;
-	align-items: center;
-	list-style-type: none;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 50px;
 }
 
-nav li {
-	padding: 0 10px;
-	font-size: 1.2em;
+nav a {
+    text-decoration: none;
     color: black;
+    font-size: 16px;
 }
 
 li:hover {
@@ -73,85 +54,95 @@ li:hover {
     color: black;
 }
 
-.logoInst{
-	height: 22px;
-	width: 22px;
+.logoInst {
+    width: 24px;
+    height: 24px;
 }
 
-h1 > span {
-	font-family: 'Work Sans';
-	font-size:10px;
-	letter-spacing: 0.1em;
+/* Style de la section de connexion */
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
 }
 
-section {
-	display: flex;
-	flex-direction: column;
-	margin: 50px 0;
-	text-align: center;
+.login section {
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    width: 300px;
 }
 
-h2{
-	font-family: 'Syne';
+.login h2 {
+    margin-bottom: 20px;
+    font-family: 'Syne', sans-serif;
+    color: #1D6154;
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154;
-	margin-bottom: 20px;
 }
 
-#formulaire input {
-	display: flex;
-	justify-content: center;
-}
-
-section label {
-    font-family: 'Work Sans';
-    font-weight: 500;
-    font-size: 14px;
-    color: #3D3D3D;
-    margin-bottom: 2px;
+.login label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
     text-align: left;
 }
 
-section input {
-	display: flex;
-    width: 379px;
-    height: 51px;
+.login input[type="email"],
+.login input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
     margin-bottom: 20px;
-    box-shadow: 0px 4px 14px 0px #00000017;
+    Width: 379px;
+	Height: 51px;
+    border-radius: 5px;
+	box-shadow: 0px 4px 14px 0px #00000017;
     border: none;
-	justify-content: center;
 }
 
-input[type="submit"]{
-	font-family: 'Syne';
+.login input[type="submit"] {
+    font-family: 'Syne';
 	font-weight: 700;
     font-size: 14px;
 	color: white;
     border-color: #1D6154;
 	background-color: #1D6154;
 	margin : 2em auto ;
-	width: 179px;
-    height: 36px;
+	Width: 179px;
+	Height: 36px;
 	text-align: center;
 	border-radius: 60px ;
     cursor: pointer;
 }
 
-a.mot-de-passe-oublie {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
+.login input[type="submit"]:hover {
+    background-color: #1D6154;
+}
+
+.mot.de.passe.oublie {
+    display: block;
     color: black;
     text-decoration: none;
 }
 
-footer .li{
-	display: flex;
-    justify-content: right;
+.mot.de.passe.oublie:hover {
+    text-decoration: underline;
 }
 
+/* Style du pied de page */
 
+footer ul {
+    list-style: none;
+}
 
+footer a {
+    text-decoration: none;
+    color: black;
+}
 
-
+footer li {
+	display: flex;
+    justify-content: right;
+	margin: 20px 50px;
+}

@@ -7,6 +7,7 @@
   const modifierButton = document.getElementById("Modifier")
   const deleteGallery = document.querySelector(".deleteGallery")
   const boutonAjoutPhoto = document.querySelector(".btnAjoutPhoto")
+  const previewImage = document.getElementById("previewImage")
 
   // Fermeture de la modale au clic sur la croix
   xmark.addEventListener("click", () => {
@@ -17,6 +18,7 @@
   containerModale.addEventListener("click", (e) => {
       if (e.target.className === "containerModale") {
           containerModale.style.display = "none"
+          ajoutPhoto.style.display = "none"
       }
   })
 
@@ -85,7 +87,7 @@ function deletephotos(id) {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',
-            'Authorization': getAuthorization(), // Ajouter le token d'authentification dans l'en-tête
+            'Authorization': getAuthorization(), 
             'Content-Type': 'application/json',
         },
         params: {
@@ -145,7 +147,7 @@ function deletephotos(id) {
     const addPicture = document.querySelector(".addPicture")
     const inputFile = document.querySelector(".addPicture input")
     const labelFile = document.querySelector(".addPicture label")
-    const iconFile = document.querySelector(".fa-image.fa-4x") // Correction du sélecteur pour l'icône
+    const iconFile = document.querySelector(".fa-image.fa-4x") 
     const pFile = document.querySelector(".addPicture p")
   
     inputFile.addEventListener("change", (event) => {
@@ -161,7 +163,7 @@ function deletephotos(id) {
       const select = document.querySelector(".ajoutPhoto select")
       if (select) {
         const categories = await getCategories()
-        categories.forEach(modaleCategorie => { // Correction de la boucle
+        categories.forEach(modaleCategorie => { 
           const option = document.createElement("option")
           option.value = modaleCategorie.id
           option.textContent = modaleCategorie.name
@@ -180,7 +182,7 @@ function deletephotos(id) {
         const formData = new FormData(form)
         fetch("http://localhost:5678/api/works/", {
           method: "POST",
-          body: formData // Correction de la transformation du formData
+          body: formData 
         })
         .then(response => response.json())
         .then(data => {
@@ -190,21 +192,30 @@ function deletephotos(id) {
       })
     }
 
+
+
+
+
+
+
+
+
     function verifChamps() {
       const modale2 = document.getElementById("modale2")
-      const validerButon = document.createElement("button")
-      validerButon.innerText = "Valider"
+      const validerButon = document.querySelector(".validerButon")
       if (form) {
         form.addEventListener("input", () => {
           if (titre.value !== "" && modaleCategorie.value !== "" && inputFile.value !== "") {
-            validerButon.classList.add("valid")
+            validerButon.classList.add(".validerButon")
+            para.style.color = "white"
+            para.style.background = "#1D6154"
           } else {
-            validerButon.classList.remove("valid")
+            validerButon.classList.remove(".validerButon")
             validerButon.disabled = true
           }
         })
-        modale2.appendChild(validerButon) 
-      } else { console.log("bouton valider ok")
+        modale2.appendChild(validerButon)
+      } else { console.log()
       }
     }
   
@@ -212,7 +223,6 @@ function deletephotos(id) {
 
 // Prévisualisation de l'image
 function afficheImageModale(event) {
-  console.log("ici")
   const fileInput = event.target
   const reader = new FileReader()
   const image = new Image()
@@ -226,10 +236,21 @@ function afficheImageModale(event) {
     console.log(previewImage)
     previewImage.appendChild(image)
     addPicture.style.display = "none"
+    previewImage.style.display = "flex"
   }
 
   reader.readAsDataURL(file)
 }
+
+//appel du token pour l'ajout des photos
+
+
+
+
+
+
+
+
 
 function addphoto(id) {
   const token = localStorage.getItem('token')
@@ -238,11 +259,11 @@ function addphoto(id) {
       return;
   }
 
-  fetch("http://localhost:5678/api/works/" + id, {
+  fetch("http://localhost:5678/api/works/", {
       method: "POST",
       headers: {
           'Accept': 'application/json',
-          'Authorization': 'Bearer ' + token, // Ajouter le token d'authentification dans l'en-tête
+          'Authorization': getAuthorization(),
           'Content-Type': 'application/json',
       },
   })
@@ -251,12 +272,15 @@ function addphoto(id) {
           return
       }
       displayCategorieModale()
+      verifChamps()
       getProjet()
   })
   .catch(error => {
       console.error("Une erreur s'est produite lors de l'ajout de la photo:", error)
   })
 }
+
+addphoto()
 
 
 

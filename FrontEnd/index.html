@@ -105,6 +105,7 @@
 		<h3>Galerie photo</h3>
 		<div class="deleteGallery"></div>
     <span id="xmarkDelete"><i class="fa-solid fa-xmark"></i></span>
+	<div class="ligne-decorative"></div>
 	<button class = "btnAjoutPhoto" >Ajouter une photo</button>
 	</div>
 
@@ -128,8 +129,12 @@
         <input type="texte" name="titre" id="titre" class="titreModale"/>
 
         <label for="modaleCategorie">Catégorie</label>
-        <select name="modaleCategorie" id="modaleCategorie" class="categorieModale"></select>
+        <select name="modaleCategorie" id="modaleCategorie" class="categorieModale">
+			<option value="">Veuillez choisir une catégorie</option>
+		</select>
+		<div class="ligne-decorative"></div>
     </form>
+
 	<button class="validerButon">Valider</button>
 </div>
 </section>
