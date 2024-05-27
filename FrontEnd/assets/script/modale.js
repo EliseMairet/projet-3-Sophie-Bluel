@@ -192,14 +192,6 @@ function deletephotos(id) {
       })
     }
 
-
-
-
-
-
-
-
-
     function verifChamps() {
       const modale2 = document.getElementById("modale2")
       const validerButon = document.querySelector(".validerButon")
