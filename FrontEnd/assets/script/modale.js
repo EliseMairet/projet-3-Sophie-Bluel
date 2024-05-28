@@ -300,5 +300,3 @@ function addphoto() {
       console.error("Une erreur s'est produite lors de l'ajout de la photo:", error)
   })
 }
-
-//rafraichir la page d'accueil faire fonction
