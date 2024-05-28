@@ -8,6 +8,9 @@
   const deleteGallery = document.querySelector(".deleteGallery")
   const boutonAjoutPhoto = document.querySelector(".btnAjoutPhoto")
   const previewImage = document.getElementById("previewImage")
+  const categorieModale = document.getElementById("modaleCategorie")
+  const fileModale = document.getElementById("file")
+  const para = document.getElementById("para")
 
   // Fermeture de la modale au clic sur la croix
   xmark.addEventListener("click", () => {
@@ -135,9 +138,10 @@ function deletephotos(id) {
   const xmarkAdd = document.getElementById("xmarkAdd")
 
     arrowLeft.addEventListener("click", ()=>{
-        ajoutPhoto.style.display = "flex"
-        photoModal.style.display = "none"
+      ajouterPhoto.style.display = "none"
+      photoModal.style.display = "flex"
     })
+
     xmarkAdd.addEventListener("click", ()=>{
         ajoutPhoto.style.display = "none"
         photoModal.style.display = "none"
@@ -193,25 +197,28 @@ function deletephotos(id) {
     }
 
     function verifChamps() {
-      const modale2 = document.getElementById("modale2")
-      const validerButon = document.querySelector(".validerButon")
-      if (form) {
-        form.addEventListener("input", () => {
-          if (titre.value !== "" && modaleCategorie.value !== "" && inputFile.value !== "") {
-            validerButon.classList.add(".validerButon")
-            para.style.color = "white"
-            para.style.background = "#1D6154"
-          } else {
-            validerButon.classList.remove(".validerButon")
-            validerButon.disabled = true
-          }
-        })
-        modale2.appendChild(validerButon)
-      } else { console.log()
+      const titreValue = titre.value
+      const categorieModaleValue = categorieModale.value
+      const fileModaleValue = fileModale.files[0]
+      if ( titreValue !="" && categorieModaleValue != "" && fileModaleValue !="")
+      {
+        para.style.color = "white"
+        para.style.background = "#1D6154"
+        return true
+      }else{
+        para.style.background = "grey"
+        para.style.color = "white"
+        return false
       }
     }
-  
-    verifChamps()
+
+titre.addEventListener("input", (event) => {
+  verifChamps()
+}) 
+
+categorieModale.addEventListener("change", (event) => {
+  verifChamps()
+})
 
 // Prévisualisation de l'image
 function afficheImageModale(event) {
@@ -236,47 +243,62 @@ function afficheImageModale(event) {
 
 //appel du token pour l'ajout des photos
 
+para.addEventListener("click", (event) => {
+  event.preventDefault()
+  let valid = verifChamps()
+  if(valid) {
+    addphoto()
+  }else{
+    alert ("Merci de remplir tout les champs")
+  }
+})
 
+//fonction fermeture de la modale àl'ajout des photos
+function closeModale1() {
+  var closeModale = document.querySelector(".ajoutPhoto")
+  if(closeModale) {
+    closeModale.style.display = "none"
+    containerModale.style.display = "none"
+  }
+}
 
-
-
-
-
-
-
-function addphoto(id) {
+function addphoto() {
+  console.log("ok")
   const token = localStorage.getItem('token')
   if (!token) {
       console.error("Token d'authentification manquant.")
       return;
   }
+  const titreValue = titre.value
+  const categorieModaleValue = categorieModale.value
+  const fileModaleValue = fileModale.files[0]
+  const formData = new FormData()
+  formData.append("image", fileModaleValue)
+  formData.append ("category", categorieModaleValue)
+  formData.append ("title", titreValue)
 
   fetch("http://localhost:5678/api/works/", {
       method: "POST",
       headers: {
           'Accept': 'application/json',
-          'Authorization': getAuthorization(),
-          'Content-Type': 'application/json',
+          'Authorization': getAuthorization()
       },
+      body: formData
   })
   .then(response => {
-      if (!response.ok) {
-          return
-      }
-      displayCategorieModale()
-      verifChamps()
-      getProjet()
+    displayphotoModal()
+    getProjet()
+    closeModale1()
+    return response.json()
+  })
+  .then(data => {
+    console.log(data)
+    closeModale1()
+    window.location.reload()
   })
   .catch(error => {
       console.error("Une erreur s'est produite lors de l'ajout de la photo:", error)
   })
 }
 
-addphoto()
-
-
-
-
-
-
-  //rendre bouton valider dispo que quand tout les champs sont remplis
+//rafraichir la page d'accueil faire fonction
