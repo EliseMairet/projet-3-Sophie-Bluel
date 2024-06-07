@@ -262,6 +262,16 @@ function closeModale1() {
   }
 }
 
+// vider formulaire
+function resetForm() {
+  document.querySelector('#previewImage').innerHTML = '';
+  document.querySelector('#previewImage').style.display = 'none';
+  document.querySelector('.addPicture').style.display = 'flex';
+  document.getElementById('file').value = ''
+  document.getElementById('titre').value = ''
+  document.getElementById('modaleCategorie').value =''
+}
+
 function addphoto() {
   console.log("ok")
   const token = localStorage.getItem('token')
@@ -289,12 +299,11 @@ function addphoto() {
     displayphotoModal()
     getProjet()
     closeModale1()
+    resetForm()
     return response.json()
   })
   .then(data => {
     console.log(data)
-    closeModale1()
-    window.location.reload()
   })
   .catch(error => {
       console.error("Une erreur s'est produite lors de l'ajout de la photo:", error)

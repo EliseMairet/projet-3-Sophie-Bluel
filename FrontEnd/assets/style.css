@@ -562,3 +562,7 @@ footer nav ul {
 	Width: 237px;
 	Height: 36px;
   }
+
+  #picture{
+    max-width: 420px;
+}
